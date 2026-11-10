@@ -1,71 +1,126 @@
-Previsión de materiales para análisis de laboratorio
-De dos semanas a una: rediseño del proceso de previsión en un laboratorio farmacéutico regulado por GMP, sin integrar ningún sistema.
+# Previsión de materiales para análisis de laboratorio
+
+**De dos semanas a una: rediseño del proceso de previsión en un laboratorio farmacéutico regulado por GMP, sin integrar ningún sistema.**
+
 > Este caso describe un método y un resultado. No incluye datos, documentos, proveedores, productos ni cifras internas de la empresa.
----
-Contexto
+
+\---
+
+## Contexto
+
 En un laboratorio de estabilidades cada lote debe analizarse en una fecha concreta: a los 3, 6, 12, 24 y 36 meses. La fecha no se mueve. Si el día del ensayo falta algo, el hito se pierde y no se recupera.
+
 Antes de cada mes hay que saber, para cada producto que entra en agenda, qué material hará falta y si estará disponible. En un mes pueden entrar entre 50 y 75 productos distintos, cada uno con su protocolo y su lista de materiales. La previsión no es una tarea de almacén: es lo que protege el calendario.
-El problema
-Preparar la previsión del mes siguiente llevaba hasta dos semanas.
+
+## El problema
+
+Preparar la previsión del mes siguiente llevaba **hasta dos semanas**.
+
 Consistía en abrir el protocolo de análisis de cada producto y comprobar, en bases de datos distintas, la columna cromatográfica, los reactivos, los viales de patrón de trabajo con su caducidad, las impurezas y patrones de referencia, y las soluciones congeladas disponibles. Lo que no estaba en esas bases se consultaba por un portal interno de solicitudes, con respuesta por correo.
+
 Cuatro cosas hacían que costara tanto:
-Se revisaba todo, cada mes, desde cero. No había forma de distinguir lo ya verificado recientemente de lo que había que volver a mirar. Ese era el desperdicio principal.
-Averiguar qué hace falta era el cuello de botella, no pedirlo. El tiempo se iba en la fase de descubrimiento.
-La búsqueda no era fiable. Un mismo reactivo aparece con nombres químicos distintos según la base de datos. Buscar por nombre devolvía resultados incompletos: o lo encontrabas por insistencia, o concluías que no había existencias cuando sí las había. El problema no era la velocidad, era que la búsqueda fallaba sin avisar.
-La disponibilidad se comprueba contra una fecha futura. Con los patrones de trabajo no basta con saber cuánto hay hoy, sino cuánto habrá vigente el día del ensayo.
+
+**Se revisaba todo, cada mes, desde cero.** No había forma de distinguir lo ya verificado recientemente de lo que había que volver a mirar. Ese era el desperdicio principal.
+
+**Averiguar qué hace falta era el cuello de botella**, no pedirlo. El tiempo se iba en la fase de descubrimiento.
+
+**La búsqueda no era fiable.** Un mismo reactivo aparece con nombres químicos distintos según la base de datos. Buscar por nombre devolvía resultados incompletos: o lo encontrabas por insistencia, o concluías que no había existencias cuando sí las había. El problema no era la velocidad, era que la búsqueda fallaba sin avisar.
+
+**La disponibilidad se comprueba contra una fecha futura.** Con los patrones de trabajo no basta con saber cuánto hay hoy, sino cuánto habrá vigente el día del ensayo.
+
 Y no todo se puede resolver tarde: una columna o un reactivo común se consiguen rápido, pero una impureza concreta o un patrón de referencia tienen proveedor específico y plazos largos. Descubrirlo el día del análisis no tiene solución.
-Qué pasaba cuando fallaba. A veces la carencia se descubría en el momento del análisis. Entonces había que pedir a otro departamento que nos prestara lo necesario, y el coste no lo pagaba quien hacía la previsión: lo pagaban los técnicos y los responsables, que perdían tiempo resolviendo en caliente algo que debería haberse visto semanas antes.
-La restricción
+
+**Qué pasaba cuando fallaba.** A veces la carencia se descubría en el momento del análisis. Entonces había que pedir a otro departamento que nos prestara lo necesario, y el coste no lo pagaba quien hacía la previsión: lo pagaban los técnicos y los responsables, que perdían tiempo resolviendo en caliente algo que debería haberse visto semanas antes.
+
+## La restricción
+
 No había permisos para integrar las bases de datos de origen ni herramientas externas. La solución tenía que funcionar con hoja de cálculo, el portal de solicitudes y el correo, con los datos introducidos a mano.
+
 Si no puedes automatizar la obtención del dato, lo que sí puedes hacer es que buscarlo una vez valga para todos, que el resultado no caduque en silencio y que nadie repita una comprobación que ya está hecha.
-El punto de partida
+
+## El punto de partida
+
 La idea de llevarlo en una hoja de cálculo no fue mía. Un compañero me pasó un archivo con cinco columnas: producto, protocolo, columna, reactivo y patrón de trabajo. Era una lista, y servía para no empezar de cero.
+
 Lo que añadí es lo que lo convirtió en un sistema: impurezas, patrones de referencia y placebos; soluciones congeladas; la columna de previsión redactada para los técnicos; observaciones; mes de agenda; fecha de comprobación e iniciales de quien la hizo; la regla de caducidad del dato; y dos pestañas nuevas, la de excipientes con su equivalencia de nomenclaturas y la de placebos ya preparados.
-Qué construí
+
+## Qué construí
+
 Una única hoja de cálculo con tres pestañas, para el departamento de estabilidades, que sustituye a la consulta dispersa en varias bases de datos.
-Pestaña 1 — Previsión por producto. Una fila por producto: protocolo y versión, columna, reactivos, patrones de trabajo con número de viales y caducidad, impurezas y patrones de referencia, una columna de previsión redactada para los técnicos, observaciones, mes de agenda, fecha de comprobación e iniciales de quien la hizo. Cada material se registra con su nombre y con sus códigos de material y de proveedor.
-Pestaña 2 — Excipientes. Producto que lo usa, nomenclatura, nombre, ubicación, código interno, caducidad, fecha de comprobación y observaciones.
-Pestaña 3 — Placebos ya preparados. Producto, lote, ubicación, fecha de comprobación y observaciones.
-Cómo funciona hoy
-Se vuelca la agenda. Cuando se sabe qué se analiza el mes siguiente, se actualiza la columna de mes de agenda de cada producto, dando de alta los que todavía no estaban en el archivo. Para dar de alta un producto que tiene varias dosis, un asistente de IA corporativo compara los protocolos de las distintas dosis y devuelve una tabla con las variaciones entre ellas, que es lo que hay que trasladar al archivo.
-Se filtra por mes de agenda y la hoja parte el trabajo en dos, según la regla de caducidad del dato.
-Filas al día: basta con verificar que la versión del protocolo sigue siendo la misma. Si ha habido actualización, se revisa si afecta a la previsión. Es una comprobación de minutos.
-Filas en rojo: ronda completa. Columnas en uso y en stock; reactivos, con atención a los menos habituales; patrones de trabajo, cantidad de viales y nuevas estandarizaciones; impurezas y patrones de referencia, para decidir si hay que pedir para stock; y soluciones congeladas, que se comprueban en la base de datos y además en persona.
-Lo que falta se señala en rojo y negrita en la previsión, y se avisa a quien lleva la agenda, que destaca ese producto en amarillo. Además se anota en observaciones el identificador de la incidencia abierta en el portal interno, de modo que la carencia queda con seguimiento asociado y no solo señalada. La carencia deja de vivir en un documento y llega hasta donde se planifica.
-Las decisiones de diseño que importaron
-Separar lo que hay que volver a mirar de lo que no. Es la decisión que explica el resultado. Una fórmula marca en rojo la fecha de comprobación cuando han pasado 75 días, y eso convierte una caducidad de dato en un criterio de priorización: cada mes se revisa a fondo solo lo que ha quedado obsoleto, no todo. El ahorro no vino de buscar más rápido, sino de dejar de repetir trabajo ya hecho.
-Nombre y código, los dos. Cada material, sea columna, reactivo o excipiente, se anota con su nombre y con sus códigos de material y de proveedor. El código es lo que hace exacta la comprobación, porque el mismo reactivo aparece con varios nombres químicos según la base de datos. El nombre es lo que hace que el archivo sirva a quien no lo conoce: si se rompe el stock de un material, cualquiera puede filtrar por su nombre y ver en el momento qué productos del mes quedan afectados, sin saberse los códigos. Anotar las dos cosas cuesta segundos y convierte la previsión en una herramienta consultable por el departamento, y no solo en el cuaderno de quien la mantiene.
-La equivalencia de nombres vive en los datos. La pestaña de excipientes va un paso más allá y guarda la nomenclatura junto al nombre. Saber que dos denominaciones son el mismo material deja de depender de la experiencia de quien hace la previsión y queda escrito donde cualquiera puede consultarlo.
-Usar IA donde está permitida y para lo que de verdad cuesta. El uso de asistentes está acotado por política de empresa, así que la pregunta no era qué se podría hacer con IA, sino qué se puede hacer dentro de lo permitido. Dar de alta un producto con varias dosis obligaba a leer y comparar protocolos casi idénticos buscando las diferencias, que es trabajo lento y propenso a saltarse justo el detalle que cambia. Preparé un asistente para que haga esa comparación y devuelva una tabla de variaciones entre dosis. La salida acelera la lectura; el protocolo sigue siendo el documento válido y la comprobación final es humana.
-Cada dato lleva fecha y firma. Quién comprobó y cuándo. Es lo que convierte una hoja personal en un recurso de equipo, y lo que hace posible la regla anterior. Un dato de disponibilidad sin fecha de comprobación no es un dato, es un recuerdo.
-La versión del protocolo es parte de la previsión. Una previsión es válida para una versión concreta. Registrarla convierte el control de cambios en una comprobación rápida en lugar de en una sorpresa.
-Hay datos que el registro no puede confirmar. Las soluciones congeladas se verifican también físicamente. Asumir que el registro basta sería más cómodo y más rápido, y produciría previsiones que parecen correctas hasta el día del ensayo.
-Una columna escrita para que otro actúe. La tabla sirve para trabajar; la columna de previsión es un resumen en lenguaje llano dirigido a los técnicos, que no tienen que interpretar nada ni preguntar.
-El aviso de carencia viaja hasta la agenda. Un código de color compartido entre dos documentos y dos responsables hace que un producto en riesgo sea visible desde el calendario, que es donde se decide.
-Saber que existe no basta: hay que saber dónde está, y cuál es la alternativa. Excipientes, placebos y soluciones llevan ubicación, y en la columna de previsión las columnas cromatográficas se listan en sus tres estados, las que están en uso, las de pruebas y las que hay en stock, cada una con su ubicación. Buena parte del tiempo perdido no era averiguar si había material, sino encontrarlo. Y esto cubre además un fallo que aparece a mitad de ensayo: si una columna empieza a dar desdoblamiento de picos, ruido de línea base o contaminación, el técnico tiene delante qué alternativas hay y dónde están, sin tener que interrumpir el análisis para buscarlo. La previsión no cubre solo lo previsto, también deja escrito el plan B.
-El proceso tiene que sobrevivir a mi ausencia. Yo genero la previsión, pero la consulta todo el departamento de estabilidades, y hay otras personas con permisos de escritura para poder mantenerla si yo falto. Un proceso que solo puede ejecutar una persona no es un proceso: es una dependencia.
-Lo ya preparado no se vuelve a preparar. La pestaña de placebos y el control de soluciones congeladas evitan rehacer trabajo ya hecho, el desperdicio más silencioso de un laboratorio. Con las soluciones congeladas el ahorro es además económico: una impureza disuelta y congelada tiene una caducidad concreta fijada por el protocolo, así que saber si queda solución vigente evita pedir una impureza nueva o un patrón de resolución de farmacopea. Y esos son los materiales más caros que compra un laboratorio: hay impurezas que llegan a costar 140 € por miligramo. Una consulta de treinta segundos en la pestaña de soluciones puede ahorrar un pedido de varios cientos de euros.
-Resultado
-Hoy es muy poco habitual que falte algo el día del ensayo. Ese era el fallo caro, porque obligaba a pedir material prestado a otro departamento y consumía tiempo de técnicos y responsables, no solo de quien hacía la previsión.
-El proceso pasó de hasta dos semanas a una: un 50 % menos de plazo.
-Cada carencia detectada queda asociada a una incidencia con seguimiento, en lugar de resolverse de palabra.
-Menos compras evitables de impurezas y patrones de resolución, al tener a la vista qué soluciones congeladas siguen vigentes.
-Menos análisis retrasados por material que llega tarde o caduca antes del ensayo.
-La previsión dejó de depender de que una persona concreta recordara dónde mirar y con qué nombre buscar.
-De archivo personal pasó a documento de consulta del departamento de estabilidades, donde agiliza el trabajo de los técnicos, con continuidad asegurada si quien lo mantiene no está.
+
+**Pestaña 1 — Previsión por producto.** Una fila por producto: protocolo y versión, columna, reactivos, patrones de trabajo con número de viales y caducidad, impurezas y patrones de referencia, una columna de previsión redactada para los técnicos, observaciones, mes de agenda, fecha de comprobación e iniciales de quien la hizo. Cada material se registra con su nombre y con sus códigos de material y de proveedor.
+
+**Pestaña 2 — Excipientes.** Producto que lo usa, nomenclatura, nombre, ubicación, código interno, caducidad, fecha de comprobación y observaciones.
+
+**Pestaña 3 — Placebos ya preparados.** Producto, lote, ubicación, fecha de comprobación y observaciones.
+
+## Cómo funciona hoy
+
+1. **Se vuelca la agenda.** Cuando se sabe qué se analiza el mes siguiente, se actualiza la columna de mes de agenda de cada producto, dando de alta los que todavía no estaban en el archivo. Para dar de alta un producto que tiene varias dosis, un asistente de IA corporativo compara los protocolos de las distintas dosis y devuelve una tabla con las variaciones entre ellas, que es lo que hay que trasladar al archivo.
+2. **Se filtra por mes de agenda** y la hoja parte el trabajo en dos, según la regla de caducidad del dato.
+3. **Filas al día:** basta con verificar que la versión del protocolo sigue siendo la misma. Si ha habido actualización, se revisa si afecta a la previsión. Es una comprobación de minutos.
+4. **Filas en rojo:** ronda completa. Columnas en uso y en stock; reactivos, con atención a los menos habituales; patrones de trabajo, cantidad de viales y nuevas estandarizaciones; impurezas y patrones de referencia, para decidir si hay que pedir para stock; y soluciones congeladas, que se comprueban en la base de datos **y además en persona**.
+5. **Lo que falta se señala** en rojo y negrita en la previsión, y se avisa a quien lleva la agenda, que destaca ese producto en amarillo. Además se anota en observaciones el identificador de la incidencia abierta en el portal interno, de modo que la carencia queda con seguimiento asociado y no solo señalada. La carencia deja de vivir en un documento y llega hasta donde se planifica.
+
+## Las decisiones de diseño que importaron
+
+**Separar lo que hay que volver a mirar de lo que no.** Es la decisión que explica el resultado. Una fórmula marca en rojo la fecha de comprobación cuando han pasado 75 días, y eso convierte una caducidad de dato en un criterio de priorización: cada mes se revisa a fondo solo lo que ha quedado obsoleto, no todo. El ahorro no vino de buscar más rápido, sino de dejar de repetir trabajo ya hecho.
+
+**Nombre y código, los dos.** Cada material, sea columna, reactivo o excipiente, se anota con su nombre y con sus códigos de material y de proveedor. El código es lo que hace exacta la comprobación, porque el mismo reactivo aparece con varios nombres químicos según la base de datos. El nombre es lo que hace que el archivo sirva a quien no lo conoce: si se rompe el stock de un material, cualquiera puede filtrar por su nombre y ver en el momento qué productos del mes quedan afectados, sin saberse los códigos. Anotar las dos cosas cuesta segundos y convierte la previsión en una herramienta consultable por el departamento, y no solo en el cuaderno de quien la mantiene.
+
+**La equivalencia de nombres vive en los datos.** La pestaña de excipientes va un paso más allá y guarda la nomenclatura junto al nombre. Saber que dos denominaciones son el mismo material deja de depender de la experiencia de quien hace la previsión y queda escrito donde cualquiera puede consultarlo.
+
+**Usar IA donde está permitida y para lo que de verdad cuesta.** El uso de asistentes está acotado por política de empresa, así que la pregunta no era qué se podría hacer con IA, sino qué se puede hacer dentro de lo permitido. Dar de alta un producto con varias dosis obligaba a leer y comparar protocolos casi idénticos buscando las diferencias, que es trabajo lento y propenso a saltarse justo el detalle que cambia. Preparé un asistente para que haga esa comparación y devuelva una tabla de variaciones entre dosis. La salida acelera la lectura; el protocolo sigue siendo el documento válido y la comprobación final es humana.
+
+**Cada dato lleva fecha y firma.** Quién comprobó y cuándo. Es lo que convierte una hoja personal en un recurso de equipo, y lo que hace posible la regla anterior. Un dato de disponibilidad sin fecha de comprobación no es un dato, es un recuerdo.
+
+**La versión del protocolo es parte de la previsión.** Una previsión es válida para una versión concreta. Registrarla convierte el control de cambios en una comprobación rápida en lugar de en una sorpresa.
+
+**Hay datos que el registro no puede confirmar.** Las soluciones congeladas se verifican también físicamente. Asumir que el registro basta sería más cómodo y más rápido, y produciría previsiones que parecen correctas hasta el día del ensayo.
+
+**Una columna escrita para que otro actúe.** La tabla sirve para trabajar; la columna de previsión es un resumen en lenguaje llano dirigido a los técnicos, que no tienen que interpretar nada ni preguntar.
+
+**El aviso de carencia viaja hasta la agenda.** Un código de color compartido entre dos documentos y dos responsables hace que un producto en riesgo sea visible desde el calendario, que es donde se decide.
+
+**Saber que existe no basta: hay que saber dónde está, y cuál es la alternativa.** Excipientes, placebos y soluciones llevan ubicación, y en la columna de previsión las columnas cromatográficas se listan en sus tres estados, las que están en uso, las de pruebas y las que hay en stock, cada una con su ubicación. Buena parte del tiempo perdido no era averiguar si había material, sino encontrarlo. Y esto cubre además un fallo que aparece a mitad de ensayo: si una columna empieza a dar desdoblamiento de picos, ruido de línea base o contaminación, el técnico tiene delante qué alternativas hay y dónde están, sin tener que interrumpir el análisis para buscarlo. La previsión no cubre solo lo previsto, también deja escrito el plan B.
+
+**El proceso tiene que sobrevivir a mi ausencia.** Yo genero la previsión, pero la consulta todo el departamento de estabilidades, y hay otras personas con permisos de escritura para poder mantenerla si yo falto. Un proceso que solo puede ejecutar una persona no es un proceso: es una dependencia.
+
+**Lo ya preparado no se vuelve a preparar.** La pestaña de placebos y el control de soluciones congeladas evitan rehacer trabajo ya hecho, el desperdicio más silencioso de un laboratorio. Con las soluciones congeladas el ahorro es además económico: una impureza disuelta y congelada tiene una caducidad concreta fijada por el protocolo, así que saber si queda solución vigente evita pedir una impureza nueva o un patrón de resolución de farmacopea. Y esos son los materiales más caros que compra un laboratorio: hay impurezas que llegan a costar 140 € por miligramo. Una consulta de treinta segundos en la pestaña de soluciones puede ahorrar un pedido de varios cientos de euros.
+
+## Resultado
+
+* **Hoy es muy poco habitual que falte algo el día del ensayo.** Ese era el fallo caro, porque obligaba a pedir material prestado a otro departamento y consumía tiempo de técnicos y responsables, no solo de quien hacía la previsión.
+* El proceso pasó de **hasta dos semanas a una**: un 50 % menos de plazo.
+* Cada carencia detectada queda asociada a una incidencia con seguimiento, en lugar de resolverse de palabra.
+* Menos compras evitables de impurezas y patrones de resolución, al tener a la vista qué soluciones congeladas siguen vigentes.
+* Menos análisis retrasados por material que llega tarde o caduca antes del ensayo.
+* La previsión dejó de depender de que una persona concreta recordara dónde mirar y con qué nombre buscar.
+* De archivo personal pasó a documento de consulta del departamento de estabilidades, donde agiliza el trabajo de los técnicos, con continuidad asegurada si quien lo mantiene no está.
+
 Parte de la mejora no es mía: en paralelo, el departamento de reactivos mejoró mucho su propia base de datos, y eso acortó una de las consultas más costosas. Un proceso que atraviesa varios departamentos mejora cuando mejoran todos.
-Lo que todavía no está resuelto
-La entrada de datos sigue siendo manual. Es el principal coste que queda y la puerta por la que entran las erratas. El alta de productos con varias dosis ya está aligerada con la comparación asistida de protocolos, pero el resto se escribe a mano.
-Siguiente paso previsto: una tabla maestra de reactivos que alimente un desplegable en la previsión. Cerraría el problema de la nomenclatura en el punto de entrada, no solo en el de consulta: no se podría escribir un reactivo inexistente ni el mismo con dos nombres distintos.
-Hay un riesgo que el sistema no puede eliminar. Si compras sufre un retraso en la entrega de una impureza y el ensayo es urgente, sigue habiendo que gestionar el préstamo con otro departamento. La previsión da margen de reacción, pero no controla los plazos de un proveedor externo. Anticipar no es lo mismo que garantizar.
-El límite es de permisos, no de diseño. Mientras no se puedan leer las bases de datos de origen, la hoja seguirá siendo una copia manual que hay que mantener fresca. La regla de los 75 días es un parche razonable para eso, no una solución.
-Qué aprendí
-El mayor ahorro casi nunca está en hacer una tarea más rápido, sino en dejar de hacerla cuando no hace falta. Para eso hay que poder distinguir lo vigente de lo caducado.
-Cuando una búsqueda es lenta, el problema suele ser que la identidad del dato está mal definida. Resolver eso primero hace innecesario optimizar lo demás.
-Un identificador exacto no sustituye al nombre con el que la gente busca. Hacen falta los dos, porque sirven a personas distintas: el código a quien comprueba, el nombre a quien llega con un problema y necesita saber a qué afecta.
-Conviene saber qué registros son fiables y cuáles exigen comprobación física. Tratarlos todos igual es lo que produce sorpresas.
-Una señal de alarma solo sirve si llega hasta quien decide.
-No hace falta que la idea sea tuya. La mayor parte del valor está en convertir una buena idea a medias en algo que funcione todos los meses.
-Trabajar con restricciones de uso de herramientas obliga a una pregunta mejor que la habitual: no qué se podría automatizar, sino qué se puede automatizar hoy y dónde duele más.
-Por qué publico esto
+
+## Lo que todavía no está resuelto
+
+**La entrada de datos sigue siendo manual.** Es el principal coste que queda y la puerta por la que entran las erratas. El alta de productos con varias dosis ya está aligerada con la comparación asistida de protocolos, pero el resto se escribe a mano.
+
+**Siguiente paso previsto:** una tabla maestra de reactivos que alimente un desplegable en la previsión. Cerraría el problema de la nomenclatura en el punto de entrada, no solo en el de consulta: no se podría escribir un reactivo inexistente ni el mismo con dos nombres distintos.
+
+**Hay un riesgo que el sistema no puede eliminar.** Si compras sufre un retraso en la entrega de una impureza y el ensayo es urgente, sigue habiendo que gestionar el préstamo con otro departamento. La previsión da margen de reacción, pero no controla los plazos de un proveedor externo. Anticipar no es lo mismo que garantizar.
+
+**El límite es de permisos, no de diseño.** Mientras no se puedan leer las bases de datos de origen, la hoja seguirá siendo una copia manual que hay que mantener fresca. La regla de los 75 días es un parche razonable para eso, no una solución.
+
+## Qué aprendí
+
+* El mayor ahorro casi nunca está en hacer una tarea más rápido, sino en dejar de hacerla cuando no hace falta. Para eso hay que poder distinguir lo vigente de lo caducado.
+* Cuando una búsqueda es lenta, el problema suele ser que la identidad del dato está mal definida. Resolver eso primero hace innecesario optimizar lo demás.
+* Un identificador exacto no sustituye al nombre con el que la gente busca. Hacen falta los dos, porque sirven a personas distintas: el código a quien comprueba, el nombre a quien llega con un problema y necesita saber a qué afecta.
+* Conviene saber qué registros son fiables y cuáles exigen comprobación física. Tratarlos todos igual es lo que produce sorpresas.
+* Una señal de alarma solo sirve si llega hasta quien decide.
+* No hace falta que la idea sea tuya. La mayor parte del valor está en convertir una buena idea a medias en algo que funcione todos los meses.
+* Trabajar con restricciones de uso de herramientas obliga a una pregunta mejor que la habitual: no qué se podría automatizar, sino qué se puede automatizar hoy y dónde duele más.
+
+## Por qué publico esto
+
 Vengo de un entorno regulado y estoy orientando mi carrera a la gestión de proyectos y producto. Este caso enseña cómo trabajo: encontrar dónde se pierde el tiempo de verdad, atacar la causa en vez del síntoma, construir con lo que está permitido usar y medir si el cambio ha servido.
+
